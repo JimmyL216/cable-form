@@ -141,6 +141,14 @@
     display: none;
   }
 
+  section input[type="checkbox"] {
+    display: none;
+  }
+
+  section input[type="checkbox"]:checked+label {
+    background-color: #D1D8E0;
+  }
+
   /* div.main {
     margin: auto;
   }
