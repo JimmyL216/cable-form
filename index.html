@@ -38,16 +38,24 @@
         <input type="radio" name="access" value="" id="phyiscalKey">
         <label for="phyiscalKey">Phyiscal Key</label>
       </section>
-      <section>
+
+
+
+      <section id="em_pow">
         <p class="question">Is the Switch connected to Emergency Power?</p>
-        <input type="radio" name="em_pow" value="Yes" id="em_pow_yes" onclick="hideTextbox()">
+        <input type="radio" name="em_pow" value="Yes" id="em_pow_yes" onclick="hide_em_pow()">
         <label for="em_pow_yes">Yes</label>
-        <input type="radio" name="em_pow" value="No" id="em_pow_no" onclick="hideTextbox()">
+        <input type="radio" name="em_pow" value="No" id="em_pow_no" onclick="hide_em_pow()">
         <label for="em_pow_no">No</label>
-        <input type="radio" name="em_pow" value="Other" id="em_pow_other" onclick="showTextbox()">
+        <input type="radio" name="em_pow" value="Other" id="em_pow_other" onclick="show_em_pow()">
         <label for="em_pow_other">Other</label>
-        <input type="text" name="" value="" id="em_pow_input">
+        <div class="extended">
+          <input type="text" name="" value="" id="em_pow_input">
+        </div>
       </section>
+
+
+
       <section>
         <p class="question">Are the rack and ladder tray grounded correctly?</p>
         <input type="radio" name="grounded" value="Rack" id="rack">
@@ -55,6 +63,9 @@
         <input type="radio" name="grounded" value="Ladder" id="ladder">
         <label for="ladder">Ladder</label>
       </section>
+
+
+
       <section>
         <p class="question">Are there Fire Stoppers inside/around the conduits?</p>
         <input type="radio" name="conduits" value="Yes" id="]cond_yes">
@@ -62,6 +73,9 @@
         <input type="radio" name="conduits" value="No" id="cond_no">
         <label for="cond_no">No</label>
       </section>
+
+
+
       <section>
         <p class="question">Is there A/C in the Telecomm Room?</p>
         <input type="radio" name="AC" value="Yes" id="ac_yes">
@@ -69,6 +83,9 @@
         <input type="radio" name="AC" value="Yes" id="ac_no">
         <label for="ac_no">No</label>
       </section>
+
+
+
       <section>
         <p class="question">What type of A/C is in the Telecom Room?</p>
         <input type="radio" name="typeAC" value="Split Unit" id="split">
@@ -78,6 +95,9 @@
         <input type="radio" name="typeAC" value="Don't Know" id="dk">
         <label for="dk">Don't Know</label>
       </section>
+
+
+
       <section>
         <p class="question">What type of Rack is installed?</p>
         <input type="radio" name="typeRack" value="2 Post Rack" id="twopost">
@@ -91,17 +111,20 @@
         <input type="radio" name="typeRack" value="Wall-mounted Bracket" id="wallbracket">
         <label for="wallbracket">Wall-mounted Bracket</label>
       </section>
+
+
+
       <section>
         <p class="question">How many Racks are in this Telecomm Room in total?</p>
         <input type="text" name="" value="" id="racks_input">
       </section>
-      <section>
+      <section id="shared">
         <p class="question">Is the Telecomm Room shared?</p>
-        <input type="radio" name="shared" value="Yes" id="shared_yes">
+        <input type="radio" name="shared" value="Yes" id="shared_yes" onclick="show_shared()">
         <label for="shared_yes">Yes</label>
-        <input type="radio" name="shared" value="No" id="share_no">
-        <label for="share_no">No</label>
-        <div class="if">
+        <input type="radio" name="shared" value="No" id="shared_no" onclick="hide_shared()">
+        <label for="shared_no">No</label>
+        <div class="extended">
           <input type="radio" name="shared" value="Access Control" id="accessControl">
           <label for="accessControl">Access Control</label>
           <input type="radio" name="shared" value="MTS (Media)" id="mts">
@@ -112,22 +135,28 @@
           <label for="facilitiesF">Facilities (Fire)</label>
         </div>
       </section>
-      <section>
+
+
+
+
+      <section id="access">
         <p class="question">How is the access to the Telecomm?</p>
-        <input type="radio" name="howAccess" value="Restricted" id="restricted">
+        <input type="radio" name="howAccess" value="Restricted" id="restricted" onclick="show_access()">
         <label for="restricted">Restricted</label>
-        <input type="radio" name="howAccess" value="Unrestricted" id="unrestricted">
+        <input type="radio" name="howAccess" value="Unrestricted" id="unrestricted" onclick="hide_access()">
         <label for="unrestricted">Unrestricted</label>
-        <div class="if">
-          <input type="radio" name="howAccess" value="Electrical Room" id="electrical" onclick="hideTextboxA()">
+        <div class="extended" id="extended_oth">
+          <input type="radio" name="howAccess" value="Electrical Room" id="electrical" onclick="hide_extended_oth()">
           <label for="electrical">Electrical Room</label>
-          <input type="radio" name="howAccess" value="Mechanical Room" id="mechanical">
+          <input type="radio" name="howAccess" value="Mechanical Room" id="mechanical" onclick="hide_extended_oth()">
           <label for="mechanical">Mechanical Room</label>
-          <input type="radio" name="howAccess" value="Office" id="office" onclick="hideTextboxA()">
+          <input type="radio" name="howAccess" value="Office" id="office" onclick="hide_extended_oth()">
           <label for="office">Office</label>
-          <input type="radio" name="howAccess" value="Other" id="access_other" onclick="showTextboxA()">
+          <input type="radio" name="howAccess" value="Other" id="access_other" onclick="show_extended_oth()">
           <label for="access_other">Other</label>
           <input type="text" name="" value="" id="access_input">
+          <div class="access_input">
+          </div>
         </div>
       </section>
       <section>

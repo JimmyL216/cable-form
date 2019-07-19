@@ -118,7 +118,7 @@
     height: 20px;
     outline: none;
     margin: auto;
-    display: none;
+    /* display: none; */
   }
 
   input[type="submit"] {
@@ -131,6 +131,14 @@
 
   input#racks_input {
     display: block;
+  }
+
+  div.extended {
+    display: none;
+  }
+
+  div.extended input#access_input {
+    display: none;
   }
 
   /* div.main {
