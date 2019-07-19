@@ -39,6 +39,12 @@ function hide_extended_oth() {
 }
 
 
+// Submiting and Validating Form
+function submitForm() {
+  var dataToSubmit = {};
+
+  
+}
 
 
 
