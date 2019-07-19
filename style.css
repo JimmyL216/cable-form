@@ -123,10 +123,11 @@
 
   input[type="submit"] {
     background-color: #4B6584;
-    width: 20%;
-    height: 30px;
+    /* width: 20%; */
+    /* height: 30px; */
     font-size: 20px;
     color: white;
+    padding: 10px 15px;
   }
 
   input#racks_input {
@@ -147,6 +148,14 @@
 
   section input[type="checkbox"]:checked+label {
     background-color: #D1D8E0;
+  }
+
+  input[type="text"],
+  input[type="button"],
+  input[type="submit"],
+  .input-checkbox {
+    -webkit-appearance: none;
+    border-radius: 0;
   }
 
   /* div.main {
