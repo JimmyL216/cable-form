@@ -40,11 +40,24 @@ function hide_extended_oth() {
 
 
 // Submiting and Validating Form
-function submitForm() {
-  var dataToSubmit = {};
+$('#cable-form').submit(function(event) {
+  event.preventDefault();
+  var form = $(this);
 
-  
-}
+  $.ajax({
+    type: "POST",
+    url: "/submitform.php",
+    data: form.serialize(),
+    error: function(error) {
+      if (error.responseJSON) {
+        alert(error.responseJSON.error);
+      }
+    },
+    success: function(data) {
+      alert(data.success);
+    }
+  });
+});
 
 
 
