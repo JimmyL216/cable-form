@@ -38,6 +38,9 @@
         <label for="locknetics">Locknetics (Card Swipe)</label>
         <input type="radio" name="access" value="Physical Key" id="phyiscalKey">
         <label for="phyiscalKey">Phyiscal Key</label>
+        <div class="alert" id="door_alert">
+          <p>Must Be Filled Out</p>
+        </div>
       </section>
 
 
@@ -53,6 +56,9 @@
         <div class="extended">
           <input type="text" name="" value="" id="em_pow_input">
         </div>
+        <div class="alert" id="em_pow_alert">
+          <p>Must Be Filled Out</p>
+        </div>
       </section>
 
 
@@ -63,6 +69,9 @@
         <label for="rack">Rack</label>
         <input type="radio" name="grounded" value="Ladder" id="ladder">
         <label for="ladder">Ladder</label>
+        <div class="alert" id="grounded_alert">
+          <p>Must Be Filled Out</p>
+        </div>
       </section>
 
 
@@ -73,6 +82,9 @@
         <label for="]cond_yes">Yes</label>
         <input type="radio" name="conduits" value="No" id="cond_no">
         <label for="cond_no">No</label>
+        <div class="alert" id="conduits_alert">
+          <p>Must Be Filled Out</p>
+        </div>
       </section>
 
 
@@ -83,6 +95,9 @@
         <label for="ac_yes">Yes</label>
         <input type="radio" name="AC" value="Yes" id="ac_no">
         <label for="ac_no">No</label>
+        <div class="alert" id="AC_alert">
+          <p>Must Be Filled Out</p>
+        </div>
       </section>
 
 
@@ -95,6 +110,9 @@
         <label for="FanCoil">Fan Coil Unit</label>
         <input type="radio" name="typeAC" value="Don't Know" id="dk">
         <label for="dk">Don't Know</label>
+        <div class="alert" id="typeAC_alert">
+          <p>Must Be Filled Out</p>
+        </div>
       </section>
 
 
@@ -111,6 +129,9 @@
         <label for="wallcabinet">Wall-mounted Cabinet</label>
         <input type="radio" name="typeRack" value="Wall-mounted Bracket" id="wallbracket">
         <label for="wallbracket">Wall-mounted Bracket</label>
+        <div class="alert" id="typeRack_alert">
+          <p>Must Be Filled Out</p>
+        </div>
       </section>
 
 
@@ -118,7 +139,12 @@
       <section>
         <p class="question">How many Racks are in this Telecomm Room in total?</p>
         <input type="text" name="numberOfRacks" value="" id="racks_input">
+        <div class="alert" id="numberOfRacks_alert">
+          <p>Must Be Filled Out</p>
+        </div>
       </section>
+
+
       <section id="shared">
         <p class="question">Is the Telecomm Room shared?</p>
         <input type="radio" name="shared" value="Yes" id="shared_yes" onclick="show_shared()">
@@ -134,6 +160,9 @@
           <label for="facilitiesB">Facilities (Burglar)</label>
           <input type="checkbox" name="shared" value="Facilities (Fire)" id="facilitiesF">
           <label for="facilitiesF">Facilities (Fire)</label>
+        </div>
+        <div class="alert" id="shared_alert">
+          <p>Must Be Filled Out</p>
         </div>
       </section>
 
@@ -156,13 +185,16 @@
           <input type="checkbox" name="howAccess" value="Other" id="access_other" onclick="show_extended_oth()">
           <label for="access_other">Other</label>
           <input type="text" name="" value="" id="access_input">
-          <div class="access_input">
-          </div>
+        </div>
+        <div class="alert" id="access_alert">
+          <p>Must Be Filled Out</p>
         </div>
       </section>
       <section>
         <input type="submit" name="Save" value="Save">
+
       </section>
+
     </form>
   </main>
   <!-- <div class="main">
