@@ -166,6 +166,10 @@
     padding: 0px;
   }
 
+  #room_alert {
+    margin: 10px;
+  }
+
   /* div.main {
     margin: auto;
   }

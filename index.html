@@ -21,17 +21,24 @@
     <section>
       <h1>Telecommunication Room Checklist</h1>
     </section>
-    <section id="building">
-      <h2>Primera Casa(PC)</h2>
-      <select>
-        <option value="">Select Room</option>
-        <option value="Room 1">Room 1</option>
-        <option value="Room 2">Room 2</option>
-        <option value="Room 3">Room 3</option>
-        <option value="Room 4">Room 4</option>
-      </select>
-    </section>
+
     <form id="cable-form">
+
+      <section id="building">
+        <h2>Primera Casa(PC)</h2>
+        <select>
+          <option value="">Select Room</option>
+          <option value="Room 1">Room 1</option>
+          <option value="Room 2">Room 2</option>
+          <option value="Room 3">Room 3</option>
+          <option value="Room 4">Room 4</option>
+        </select>
+        <div class="alert" id="room_alert">
+          <p>Must Be Filled Out</p>
+        </div>
+      </section>
+
+
       <section>
         <p class="question">Door Access Type:</p>
         <input type="radio" name="door" value="" id="locknetics">
