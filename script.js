@@ -42,21 +42,58 @@ function hide_extended_oth() {
 // Submiting and Validating Form
 $('#cable-form').submit(function(event) {
   event.preventDefault();
-  var form = $(this);
+  var formData = $(this).serializeArray();
+  var isValid = true;
 
-  $.ajax({
-    type: "POST",
-    url: "/submitform.php",
-    data: form.serialize(),
-    error: function(error) {
-      if (error.responseJSON) {
-        alert(error.responseJSON.error);
+  var missingFields = [
+    "access",
+    "em_pow",
+    "grounded",
+    "conduits",
+    "AC",
+    "typeAC",
+    "typeRack",
+    "shared",
+    "howAccess"
+  ];
+  console.log(formData);
+  for (var i = 0; i < formData.length; i++) {
+    var currField = formData[i].name;
+    var index = missingFields.indexOf(currField);
+    if (index != -1) missingFields.splice(index, 1);
+    if (currField == "numberOfRacks") {
+      if (formData[i].value == "") {
+        missingFields.push("numberOfRacks");
+      } else if (isNaN(formData[i].value)) {
+        $("#numberOfRacks-alert").html("<p>This field must be a valid number</p>");
       }
-    },
-    success: function(data) {
-      alert(data.success);
     }
-  });
+  }
+  // console.log(missingFields);
+  if (missingFields.length != 0) {
+    isValid = false;
+    for (var i = 0; i < missingFields.length; i++) {
+      $("#"+missingFields[i]+"-alert").html("<p>This field is required</p>");
+    }
+  }
+
+  // Check if number is a number
+
+  if (isValid) {
+    $.ajax({
+      type: "POST",
+      url: "/submitform.php",
+      data: form.serialize(),
+      error: function(error) {
+        if (error.responseJSON) {
+          alert(error.responseJSON.error);
+        }
+      },
+      success: function(data) {
+        alert(data.success);
+      }
+    });
+  }
 });
 
 
