@@ -158,6 +158,14 @@
     border-radius: 0;
   }
 
+  div.alert {
+    border: 1px red solid;
+    border-radius: 5px;
+    background-color: #ff8080;
+    display: none;
+    padding: 0px;
+  }
+
   /* div.main {
     margin: auto;
   }
