@@ -171,6 +171,21 @@
     border-radius: 0;
   }
 
+<<<<<<< HEAD
+=======
+  div.alert {
+    border: 1px red solid;
+    border-radius: 5px;
+    background-color: #ff8080;
+    display: none;
+    padding: 0px;
+  }
+
+  #room_alert {
+    margin: 10px;
+  }
+
+>>>>>>> c1065dd8bdb1b60bc0c05f0da4e859556838c6a1
   /* div.main {
     margin: auto;
   }
