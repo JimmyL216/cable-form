@@ -86,6 +86,19 @@
     text-align: left;
   }
 
+  body main section p.question.required,
+  body main section p.question.invalid-number
+  {
+    color: red;
+  }
+
+  body main section p.question.required::after {
+    content: " *required";
+  }
+  body main section p.question.invalid-number::after {
+    content: " invalid number";
+  }
+
   section input[type="radio"] {
     display: none;
   }
@@ -156,14 +169,6 @@
   .input-checkbox {
     -webkit-appearance: none;
     border-radius: 0;
-  }
-
-  div.alert {
-    border: 1px red solid;
-    border-radius: 5px;
-    background-color: #ff8080;
-    display: none;
-    padding: 0px;
   }
 
   /* div.main {

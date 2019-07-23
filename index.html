@@ -23,8 +23,8 @@
     </section>
     <section id="building">
       <h2>Primera Casa(PC)</h2>
-      <select>
-        <option value="">Select Room</option>
+      <select id="roomDropdown">
+        <option>Select Room</option>
         <option value="Room 1">Room 1</option>
         <option value="Room 2">Room 2</option>
         <option value="Room 3">Room 3</option>
@@ -32,15 +32,12 @@
       </select>
     </section>
     <form id="cable-form">
-      <section>
+      <section id="access">
         <p class="question">Door Access Type:</p>
         <input type="radio" name="access" value="Locknetics" id="locknetics">
         <label for="locknetics">Locknetics (Card Swipe)</label>
         <input type="radio" name="access" value="Physical Key" id="phyiscalKey">
         <label for="phyiscalKey">Phyiscal Key</label>
-        <div class="alert" id="door_alert">
-          <p>Must Be Filled Out</p>
-        </div>
       </section>
 
 
@@ -54,55 +51,43 @@
         <input type="radio" name="em_pow" value="Other" id="em_pow_other" onclick="show_em_pow()">
         <label for="em_pow_other">Other</label>
         <div class="extended">
-          <input type="text" name="" value="" id="em_pow_input">
-        </div>
-        <div class="alert" id="em_pow_alert">
-          <p>Must Be Filled Out</p>
+          <input type="text" id="em_pow_input">
         </div>
       </section>
 
 
 
-      <section>
+      <section id="grounded">
         <p class="question">Are the rack and ladder tray grounded correctly?</p>
         <input type="radio" name="grounded" value="Rack" id="rack">
         <label for="rack">Rack</label>
         <input type="radio" name="grounded" value="Ladder" id="ladder">
         <label for="ladder">Ladder</label>
-        <div class="alert" id="grounded_alert">
-          <p>Must Be Filled Out</p>
-        </div>
       </section>
 
 
 
-      <section>
+      <section id="conduits">
         <p class="question">Are there Fire Stoppers inside/around the conduits?</p>
         <input type="radio" name="conduits" value="Yes" id="]cond_yes">
         <label for="]cond_yes">Yes</label>
         <input type="radio" name="conduits" value="No" id="cond_no">
         <label for="cond_no">No</label>
-        <div class="alert" id="conduits_alert">
-          <p>Must Be Filled Out</p>
-        </div>
       </section>
 
 
 
-      <section>
+      <section id="AC">
         <p class="question">Is there A/C in the Telecomm Room?</p>
         <input type="radio" name="AC" value="Yes" id="ac_yes">
         <label for="ac_yes">Yes</label>
         <input type="radio" name="AC" value="Yes" id="ac_no">
         <label for="ac_no">No</label>
-        <div class="alert" id="AC_alert">
-          <p>Must Be Filled Out</p>
-        </div>
       </section>
 
 
 
-      <section>
+      <section id="typeAC">
         <p class="question">What type of A/C is in the Telecom Room?</p>
         <input type="radio" name="typeAC" value="Split Unit" id="split">
         <label for="split">Split Unit</label>
@@ -110,14 +95,11 @@
         <label for="FanCoil">Fan Coil Unit</label>
         <input type="radio" name="typeAC" value="Don't Know" id="dk">
         <label for="dk">Don't Know</label>
-        <div class="alert" id="typeAC_alert">
-          <p>Must Be Filled Out</p>
-        </div>
       </section>
 
 
 
-      <section>
+      <section id="typeRack">
         <p class="question">What type of Rack is installed?</p>
         <input type="radio" name="typeRack" value="2 Post Rack" id="twopost">
         <label for="twopost">2 Post Rack</label>
@@ -129,19 +111,13 @@
         <label for="wallcabinet">Wall-mounted Cabinet</label>
         <input type="radio" name="typeRack" value="Wall-mounted Bracket" id="wallbracket">
         <label for="wallbracket">Wall-mounted Bracket</label>
-        <div class="alert" id="typeRack_alert">
-          <p>Must Be Filled Out</p>
-        </div>
       </section>
 
 
 
-      <section>
+      <section id="numberOfRacks">
         <p class="question">How many Racks are in this Telecomm Room in total?</p>
-        <input type="text" name="numberOfRacks" value="" id="racks_input">
-        <div class="alert" id="numberOfRacks_alert">
-          <p>Must Be Filled Out</p>
-        </div>
+        <input type="text" name="numberOfRacks" id="racks_input">
       </section>
 
 
@@ -152,42 +128,36 @@
         <input type="radio" name="shared" value="No" id="shared_no" onclick="hide_shared()">
         <label for="shared_no">No</label>
         <div class="extended">
-          <input type="checkbox" name="shared" value="Access Control" id="accessControl">
+          <input type="checkbox" name="sharedWith" value="Access Control" id="accessControl">
           <label for="accessControl">Access Control</label>
-          <input type="checkbox" name="shared" value="MTS (Media)" id="mts">
+          <input type="checkbox" name="sharedWith" value="MTS (Media)" id="mts">
           <label for="mts">MTS (Media)</label>
-          <input type="checkbox" name="shared" value="Facilities (Burglar)" id="facilitiesB">
+          <input type="checkbox" name="sharedWith" value="Facilities (Burglar)" id="facilitiesB">
           <label for="facilitiesB">Facilities (Burglar)</label>
-          <input type="checkbox" name="shared" value="Facilities (Fire)" id="facilitiesF">
+          <input type="checkbox" name="sharedWith" value="Facilities (Fire)" id="facilitiesF">
           <label for="facilitiesF">Facilities (Fire)</label>
-        </div>
-        <div class="alert" id="shared_alert">
-          <p>Must Be Filled Out</p>
         </div>
       </section>
 
 
 
 
-      <section id="access">
+      <section id="howAccess">
         <p class="question">How is the access to the Telecomm?</p>
         <input type="radio" name="howAccess" value="Restricted" id="restricted" onclick="show_access()">
         <label for="restricted">Restricted</label>
         <input type="radio" name="howAccess" value="Unrestricted" id="unrestricted" onclick="hide_access()">
         <label for="unrestricted">Unrestricted</label>
         <div class="extended" id="extended_oth">
-          <input type="checkbox" name="howAccess" value="Electrical Room" id="electrical" onclick="hide_extended_oth()">
+          <input type="radio" name="howAccessRestricted" value="Electrical Room" id="electrical" onclick="hide_extended_oth()">
           <label for="electrical">Electrical Room</label>
-          <input type="checkbox" name="howAccess" value="Mechanical Room" id="mechanical" onclick="hide_extended_oth()">
+          <input type="radio" name="howAccessRestricted" value="Mechanical Room" id="mechanical" onclick="hide_extended_oth()">
           <label for="mechanical">Mechanical Room</label>
-          <input type="checkbox" name="howAccess" value="Office" id="office" onclick="hide_extended_oth()">
+          <input type="radio" name="howAccessRestricted" value="Office" id="office" onclick="hide_extended_oth()">
           <label for="office">Office</label>
-          <input type="checkbox" name="howAccess" value="Other" id="access_other" onclick="show_extended_oth()">
+          <input type="radio" name="howAccessRestricted" value="Other" id="access_other" onclick="show_extended_oth()">
           <label for="access_other">Other</label>
-          <input type="text" name="" value="" id="access_input">
-        </div>
-        <div class="alert" id="access_alert">
-          <p>Must Be Filled Out</p>
+          <input type="text" name="howAccessRestrictedOther" id="access_input">
         </div>
       </section>
       <section>
@@ -204,7 +174,7 @@
           <h3>Primera Casa(PC)</h3>
           <div class="dropdown">
             <select>
-              <option value="">Select Room</option>
+              <option>Select Room</option>
               <option value="Room 1">Room 1</option>
               <option value="Room 2">Room 2</option>
               <option value="Room 3">Room 3</option>
@@ -215,9 +185,9 @@
         <div class="sections">
           <section>
             <p>Door Access Type:</p>
-            <input type="radio" name="access" value="" id="locknetics">
+            <input type="radio" name="access" id="locknetics">
             <label for="locknetics">Locknetics (Card Swipe)</label>
-            <input type="radio" name="access" value="" id="phyiscalKey">
+            <input type="radio" name="access" id="phyiscalKey">
             <label for="phyiscalKey">Phyiscal Key</label>
           </section>
           <section>
@@ -228,7 +198,7 @@
             <label for="no">No</label>
             <input type="radio" name="connect" value="Other" id="other">
             <label for="other">Other</label>
-            <input type="text" name="" value="" id="input">
+            <input type="text" name="" id="input">
           </section>
           <section>
             <p>Are the rack and ladder tray grounded correctly?</p>
@@ -275,7 +245,7 @@
           </section>
           <section>
             <p>How many Racks are in this Telecomm Room in total?</p>
-            <input type="text" name="" value="" id="input2">
+            <input type="text" name="" id="input2">
           </section>
           <section>
             <p>Is the Telecomm Room shared?</p>

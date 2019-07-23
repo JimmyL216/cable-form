@@ -19,12 +19,12 @@ function hide_shared() {
 }
 
 function show_access() {
-  var c = document.getElementById("access").children;
+  var c = document.getElementById("howAccess").children;
   c[5].style.display = "block";
 }
 
 function hide_access() {
-  var c = document.getElementById("access").children;
+  var c = document.getElementById("howAccess").children;
   c[5].style.display = "none";
 }
 
@@ -42,10 +42,10 @@ function hide_extended_oth() {
 // Submiting and Validating Form
 $('#cable-form').submit(function(event) {
   event.preventDefault();
-  var formData = $(this).serializeArray();
   var isValid = true;
+  var formData = {};
 
-  var missingFields = [
+  var requiredFields = [
     "access",
     "em_pow",
     "grounded",
@@ -54,36 +54,84 @@ $('#cable-form').submit(function(event) {
     "typeAC",
     "typeRack",
     "shared",
-    "howAccess"
+    "howAccess",
+    "numberOfRacks",
+    "roomDropdown"
   ];
-  console.log(formData);
-  for (var i = 0; i < formData.length; i++) {
-    var currField = formData[i].name;
-    var index = missingFields.indexOf(currField);
-    if (index != -1) missingFields.splice(index, 1);
-    if (currField == "numberOfRacks") {
-      if (formData[i].value == "") {
-        missingFields.push("numberOfRacks");
-      } else if (isNaN(formData[i].value)) {
-        $("#numberOfRacks-alert").html("<p>This field must be a valid number</p>");
+  for (var i in requiredFields) {
+    var selector = "input[name='" + requiredFields[i] + "']";
+    if (requiredFields[i] == "roomDropdown") {
+      if ($("#roomDropdown :selected").val() == "Select Room") {
+        isValid = false;
+        alert("Please select a room at the beginning of the form");
+      } else {
+        formData[requiredFields[i]] = $("#roomDropdown :selected").val();
+      }
+    } else if (requiredFields[i] == "numberOfRacks") {
+      if ($(selector).val() == "") {
+        isValid = false;
+        $('#'+requiredFields[i]).find("p.question").addClass('required');
+      } else if (isNaN(($(selector).val()))) {
+        $('#'+requiredFields[i]).find("p.question").addClass('invalid-number');
+      }
+    } else if (!$(selector).is(':checked')) {
+      isValid = false;
+      $('#'+requiredFields[i]).find("p.question").addClass('required');
+    } else {
+      var value = $(selector).filter(":checked").val();
+      if (requiredFields[i] == "em_pow") {
+        if (value == "Other" && $("#em_pow_input").val() == "") {
+          isValid = false;
+          $('#'+requiredFields[i]).find("p.question").addClass('required');
+        } else if (value == "Other") {
+          formData[requiredFields[i]] = $("#em_pow_input").val();
+        }
+      } else if (requiredFields[i] == "howAccess") {
+        if (value == "Unrestricted") {
+          formData[requiredFields[i]] = value;
+        } else {
+          var subSelector = "input[name='howAccessRestricted']";
+          if (!$(subSelector).is(':checked')) {
+            isValid = false;
+            $('#'+requiredFields[i]).find("p.question").addClass('required');
+          } else if ($(subSelector).filter(":checked").val() == "Other") {
+            if ($("input[name='howAccessRestrictedOther']").val() == "") {
+              isValid = false;
+              $('#'+requiredFields[i]).find("p.question").addClass('required');
+            } else {
+              formData[requiredFields[i]] = $("input[name='howAccessRestrictedOther']").val();
+            }
+          } else {
+            formData[requiredFields[i]] = $(subSelector).filter(":checked").val();
+          }
+        }
+      } else if (requiredFields[i] == "shared") {
+        if (value == "No") {
+          formData[requiredFields[i]] = value;
+        } else {
+          var subSelector = "input[name='sharedWith']";
+          if ($(subSelector).is(':checked')) {
+            var radioBoxes = $(subSelector).filter(":checked");
+            var value = [];
+            for (var j = 0; j < radioBoxes.length; j++) {
+              value.push(radioBoxes[j].value);
+            }
+            formData[requiredFields[i]] = value;
+          } else {
+            formData[requiredFields[i]] = value;
+          }
+        }
+      } else {
+        formData[requiredFields[i]] = value;
       }
     }
   }
-  // console.log(missingFields);
-  if (missingFields.length != 0) {
-    isValid = false;
-    for (var i = 0; i < missingFields.length; i++) {
-      $("#"+missingFields[i]+"-alert").html("<p>This field is required</p>");
-    }
-  }
-
-  // Check if number is a number
 
   if (isValid) {
     $.ajax({
       type: "POST",
       url: "/submitform.php",
-      data: form.serialize(),
+      data: formData,
       error: function(error) {
         if (error.responseJSON) {
           alert(error.responseJSON.error);
@@ -91,8 +139,13 @@ $('#cable-form').submit(function(event) {
       },
       success: function(data) {
         alert(data.success);
+        for (var i in requiredFields) {
+          $('#'+requiredFields[i]).find("p.question").removeClass('required');
+        }
       }
     });
+  } else {
+    window.scrollTo(0, 0);
   }
 });
 
