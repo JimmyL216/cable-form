@@ -1,198 +1,220 @@
-function show_em_pow() {
-  var c = document.getElementById("em_pow").children;
-  c[7].style.display = "block";
+function hide_extended(parent, other) {
+  if (parent == "#howAccess") {
+    $(parent).find(other).css("display", "none");
+    $(parent).find('.extended-other').css("display", "none");
+  } else {
+    $(parent).find('.extended').css("display", "none");
+  }
 }
 
-function hide_em_pow() {
-  var c = document.getElementById("em_pow").children;
-  c[7].style.display = "none";
+function show_extended(parent, other) {
+  if (parent == "#howAccess") {
+    $(parent).find(other).css("display", "block");
+    if (other == '.extended') {
+      $(parent).find('.extended-other').css("display", "none");
+    } else {
+      $(parent).find('.extended').css("display", "none");
+    }
+  } else {
+    $(parent).find('.extended').css("display", "block");
+  }
 }
-
-function show_shared() {
-  var c = document.getElementById("shared").children;
-  c[5].style.display = "block";
-}
-
-function hide_shared() {
-  var c = document.getElementById("shared").children;
-  c[5].style.display = "none";
-}
-
-function show_access() {
-  var c = document.getElementById("howAccess").children;
-  c[5].style.display = "block";
-}
-
-function hide_access() {
-  var c = document.getElementById("howAccess").children;
-  c[5].style.display = "none";
-}
-
-function show_extended_oth() {
-  var c = document.getElementById("extended_oth").children;
-  c[8].style.display = "block";
-}
-
-function hide_extended_oth() {
-  var c = document.getElementById("extended_oth").children;
-  c[8].style.display = "none";
-}
-
 
 // Submiting and Validating Form
 $('#cable-form').submit(function(event) {
   event.preventDefault();
-  var isValid = true;
-  var formData = {};
+  var data = {};
+  var arr = $(this).serializeArray();
+  for (i in arr) {
+    data[arr[i].name] = arr[i].value;
+  }
+  var post = {};
 
-  var requiredFields = [
-    "access",
-    "em_pow",
-    "grounded",
-    "conduits",
-    "AC",
-    "typeAC",
-    "typeRack",
-    "shared",
-    "howAccess",
-    "numberOfRacks",
-    "roomDropdown"
-  ];
-  for (var i in requiredFields) {
-    var selector = "input[name='" + requiredFields[i] + "']";
-    if (requiredFields[i] == "roomDropdown") {
-      if ($("#roomDropdown :selected").val() == "Select Room") {
-        isValid = false;
-        alert("Please select a room at the beginning of the form");
-      } else {
-        formData[requiredFields[i]] = $("#roomDropdown :selected").val();
-      }
-    } else if (requiredFields[i] == "numberOfRacks") {
-      if ($(selector).val() == "") {
-        isValid = false;
-        $('#'+requiredFields[i]).find("p.question").addClass('required');
-      } else if (isNaN(($(selector).val()))) {
-        $('#'+requiredFields[i]).find("p.question").addClass('invalid-number');
-      }
-    } else if (!$(selector).is(':checked')) {
-      isValid = false;
-      $('#'+requiredFields[i]).find("p.question").addClass('required');
-    } else {
-      var value = $(selector).filter(":checked").val();
-      if (requiredFields[i] == "em_pow") {
-        if (value == "Other" && $("#em_pow_input").val() == "") {
-          isValid = false;
-          $('#'+requiredFields[i]).find("p.question").addClass('required');
-        } else if (value == "Other") {
-          formData[requiredFields[i]] = $("#em_pow_input").val();
+  $(this).find('section').each(function() {
+    var field = this.getAttribute("data-field");
+    var expandable = this.getAttribute("data-expandable");
+    var fieldData;
+
+    if (data.hasOwnProperty(field)) {
+      if (data[field] == "Other") {
+        if (data[field + "_other"] != "") {
+          fieldData = data[field + "_other"];
         }
-      } else if (requiredFields[i] == "howAccess") {
-        if (value == "Unrestricted") {
-          formData[requiredFields[i]] = value;
-        } else {
-          var subSelector = "input[name='howAccessRestricted']";
-          if (!$(subSelector).is(':checked')) {
-            isValid = false;
-            $('#'+requiredFields[i]).find("p.question").addClass('required');
-          } else if ($(subSelector).filter(":checked").val() == "Other") {
-            if ($("input[name='howAccessRestrictedOther']").val() == "") {
-              isValid = false;
-              $('#'+requiredFields[i]).find("p.question").addClass('required');
-            } else {
-              formData[requiredFields[i]] = $("input[name='howAccessRestrictedOther']").val();
+      } else if (expandable != null) {
+        if (data[field] == expandable) {
+          var expandableType = this.getAttribute("data-expandable-type");
+          if (expandableType == "radio") {
+            if (data[field + '-extended'] != null && data[field + '-extended'] != "") {
+              fieldData = data[field + "-extended"];
             }
-          } else {
-            formData[requiredFields[i]] = $(subSelector).filter(":checked").val();
+          } else if (expandableType == "checkbox") {
+            var values = [];
+            $(this).find("input:checkbox:checked").each(function() {
+              values.push($(this).val());
+            });
+            fieldData = values;
           }
-        }
-      } else if (requiredFields[i] == "shared") {
-        if (value == "No") {
-          formData[requiredFields[i]] = value;
         } else {
-          var subSelector = "input[name='sharedWith']";
-          if ($(subSelector).is(':checked')) {
-            var radioBoxes = $(subSelector).filter(":checked");
-            var value = [];
-            for (var j = 0; j < radioBoxes.length; j++) {
-              value.push(radioBoxes[j].value);
-            }
-            formData[requiredFields[i]] = value;
-          } else {
-            formData[requiredFields[i]] = value;
-          }
+          fieldData = data[field];
         }
       } else {
-        formData[requiredFields[i]] = value;
+        if (!(data[field] == null || data[field] == "")) {
+          fieldData = data[field];
+        }
       }
     }
-  }
 
-  if (isValid) {
+    if (typeof(fieldData) === "undefined" || fieldData.length == 0) {
+      $(this).addClass("required");
+    } else if (field == "numberOfRacks" && isNaN(fieldData)) {
+      $(this).addClass("invalid-number");
+    } else {
+      post[field] = fieldData;
+    }
+  });
+  console.log("POST Data");
+  console.log(post);
+
+  var length = Object.keys(post).length;
+  if (length == 10) {
+    post.room = app.roomNumber;
+
     $.ajax({
-      type: "POST",
-      url: "/submitform.php",
-      data: formData,
-      error: function(error) {
-        if (error.responseJSON) {
-          alert(error.responseJSON.error);
-        }
+      method: "POST",
+      url: "/1/index.php",
+      data: post,
+      error: function(err) {
       },
-      success: function(data) {
-        alert(data.success);
-        for (var i in requiredFields) {
-          $('#'+requiredFields[i]).find("p.question").removeClass('required');
-        }
+      success: function(response) {
+        alert(response.success);
+        app.hideForm();
       }
     });
   } else {
-    window.scrollTo(0, 0);
+    scrollTo(0, 0);
+    alert("Please fill missing/invalid fields");
   }
 });
 
+var app = {
+  url: "/1/index.php",
+  roomNumber: -1,
+  formAlreadyExists: false,
+  call: function(obj) {
+    $.ajax({
+      method: obj.method,
+      url: this.url,
+      data: obj.data,
+      error: function(err) {
+        console.log("Error");
+      },
+      success: obj.success
+    });
+  },
+  loadRooms: function() {
+    console.log(this);
+    this.call({
+      method: 'GET',
+      data: {
+        action: "rooms"
+      },
+      success: function(data) {
+        for (var i in data.rooms) {
+          var room = data.rooms[i].room;
+          var option = new Option("Room " + room, room);
+          $(option).html("Room " + room);
+          $("select").append(option);
+        }
+      }
+    });
+  },
+  displayForm: function() {
+    $("form").removeClass("hidden");
+  },
+  hideForm: function() {
+    $("form").addClass("hidden");
+  },
+  clearForm: function() {
+    $('form')[0].reset();
+    /*
+    hide_access();
+    hide_em_pow();
+    hide_extended_oth();
+    hide_shared();
+    */
+  }
+};
+
+function selectRoom() {
+  app.roomNumber = $(this).val();
+  var params = {
+    room: app.roomNumber
+  }
+  app.displayForm();
+  // Make GET request to form.php
+  /*
+  $.ajax({
+    method: "GET",
+    url: "/1/index.php",
+    data: params,
+    error: function(error) {
+      app.formAlredyExists = true;
+      clearForm();
+    },
+    success: function(response) {
+      fillForm(response);
+      app.formAlredyExists = false;
+    }
+  });
+  */
+  // If 200, load the values into the form, set formAlreadyExists to false
+  // If 400 (can't find one that already exists), set formAlredyExists to true
+
+
+}
+
+function fillForm(response) {
+
+}
+
+function loadRooms() {
+  $.ajax({
+    method: 'GET',
+    url: '/1/index.php',
+    data: {
+      action: "rooms"
+    },
+    error: function(error) {
+
+    },
+    success: function(data) {
+      for (var i in data.rooms) {
+        var room = data.rooms[i].room;
+        var option = new Option("Room " + room, room);
+        $(option).html("Room " + room);
+        $("select").append(option);
+      }
+    }
+  });
+}
 
 
 
-// function showTextbox() {
-//   var input = document.getElementById('em_pow_input')
-//   if (input.style.display === "none") {
-//     input.style.display = "block";
-//   } else {
-//     input.style.display = "none";
-//   }
-// }
+// Event handlers
 
+$(document).ready(app.loadRooms());
 
+$('#room').change(selectRoom);
 
-//
-// function showTextbox() {
-//   document.getElementById('em_pow_input').style.display = "block";
-// }
-//
-// function hideTextbox() {
-//   document.getElementById('em_pow_input').style.display = "none";
-//
-// }
-//
-// function showTextboxA() {
-//   document.getElementById('access_input').style.display = "block";
-// }
-//
-// function hideTextboxA() {
-//   document.getElementById('access_input').style.display = "none";
-// }
-//
-//
-//
+$('section').find('label').click(function() {
+  $(this.parentElement).removeClass('required');
+});
 
+$('section').find("input[type='text']").change(function() {
+  $(this.parentElement).removeClass('required');
+  $(this.parentElement).removeClass('invalid-number');
+});
 
-
-// function show() {
-//   // this.parentElement.querySelector(".extended").style.display = "block";
-//   this.parentElement;
-//   console.log(this.parentElement);
-// }
-
-// function hide() {
-//   document.getelemntbyclassName("show").nextElementSibling("show").style.display = "none";
-//
-// }
+$('.extended').find("label").click(function() {
+  $(this.parentElement.parentElement).removeClass('required');
+});
